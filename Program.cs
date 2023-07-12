@@ -59,16 +59,31 @@ Console.WriteLine("Products:");
 for (int i = 0; i < products.Count; i++) {
     Console.WriteLine($"{i + 1}. {products[i].Name}");
 }
-Console.WriteLine("Please enter a product number: ");
+Product chosenProduct = null!;
 
-int response = int.Parse(Console.ReadLine()!.Trim());
-
-while (response > products.Count || response < 1){
-    Console.WriteLine("You didn't choose anything, try again!");
-    response = int.Parse(Console.ReadLine()!.Trim());
+while (chosenProduct == null)
+{
+    Console.WriteLine("Please enter a product number: ");
+    try
+    {
+        int response = int.Parse(Console.ReadLine()!.Trim());
+        chosenProduct = products[response - 1];
+    }
+    catch (FormatException)
+    {
+        Console.WriteLine("Please type only integers!");
+    }
+    catch (ArgumentOutOfRangeException)
+    {
+        Console.WriteLine("Please choose an existing item only!");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+        Console.WriteLine("Come on man!");
+    }
 }
 
-Product chosenProduct = products[response - 1];
 DateTime now = DateTime.Now;
 TimeSpan timeInStock = now - chosenProduct.StockDate;
 Console.WriteLine(@$"You chose: 
