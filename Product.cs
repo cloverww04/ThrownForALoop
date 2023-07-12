@@ -1,4 +1,4 @@
-//#pragma warning disable CA1050
+#pragma warning disable CA1050
 public class Product {
     public string? Name { get; set; }
     public decimal Price { get; set; }
